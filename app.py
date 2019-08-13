@@ -45,6 +45,8 @@ def handle_message(event):
         reply_text = "哈囉"
     elif(text=="機器人"):
         reply_text = "叫我嗎"
+    elif(text=="早安"):
+        reply_text = "Good Morning"        
     else:
         reply_text = text
 #如果非以上的選項，就會學你說話
