@@ -64,8 +64,8 @@ def fund1():
  hash = {k:v for k, v in zip(content, content1)}
 
  for key, value in hash.items():
-    finalResult = "日期: {}, 淨值:{}".format(key,value)
-    return finalResult
+    finalResult += "日期: {}, 淨值:{}\n".format(key,value)
+ return finalResult
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
