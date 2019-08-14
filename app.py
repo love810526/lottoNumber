@@ -66,6 +66,26 @@ def fund1():
  for key, value in hash.items():
     finalResult += "日期: {}, 淨值:{}\n".format(key,value)
  return finalResult
+
+def fund2():
+ head_Html_lotto='https://tw.money.yahoo.com/fund/history/F0GBR04AMX:FO'
+ res = requests.get(head_Html_lotto, timeout=30)
+ soup = BeautifulSoup(res.text, 'html.parser')
+ content = []
+ content1 = []
+ finalResult = ""
+ for index, data in enumerate(soup.select('div#recent-price')): 
+   for index, date in  enumerate(data.select('td.short-date')) :
+     date = date.text
+     content.append(date)
+     for index, value in  enumerate(data.select('td.zero')) :
+      value = value.text
+      content1.append(value)
+ hash = {k:v for k, v in zip(content, content1)}
+
+ for key, value in hash.items():
+    finalResult += "日期: {}, 淨值:{}\n".format(key,value)
+ return finalResult
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -80,6 +100,9 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="安聯台灣科技"):
         a=fund1()
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
+    elif(text=="貝萊德世界科技"):
+        a=fund2()
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="你好"):
         reply_text = "哈囉"
