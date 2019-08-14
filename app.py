@@ -12,6 +12,10 @@ from linebot.models import *
 from bs4 import BeautifulSoup
 import requests
 
+import time
+from selenium import webdriver
+from phantomjs_bin import executable_path
+
 app = Flask(__name__)
 
 # Channel Access Token
@@ -86,6 +90,20 @@ def fund2():
  for key, value in hash.items():
     finalResult += "日期: {}, 淨值:{}\n".format(key,value)
  return finalResult
+
+def New_Taipei_City():
+    target_url = 'https://www.cwb.gov.tw/V7/forecast/taiwan/New_Taipei_City.htm'
+    driver = webdriver.PhantomJS(executable_path=executable_path)
+    driver.get(target_url)
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
+    content = ""
+    result = ""
+    for data in soup.select('#ftext'):
+        title = str(data)
+        content = title.split("<br/><br/>")[2]
+        result = '新北市天氣: {}'.format(content)
+
+    return result
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -103,6 +121,9 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="貝萊德世界科技"):
         a=fund2()
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
+    elif(text=="明天天氣"):
+        a=New_Taipei_City()
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="你好"):
         reply_text = "哈囉"
