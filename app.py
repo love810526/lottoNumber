@@ -93,7 +93,7 @@ def fund2():
 
 def New_Taipei_City():
     target_url = 'https://www.cwb.gov.tw/V7/forecast/taiwan/New_Taipei_City.htm'
-    driver = webdriver.PhantomJS(executable_path='/app/vendor/phantomjs/bin')
+    driver = webdriver.PhantomJS(executable_path='vendor/phantomjs/bin/phantomjs')
     driver.get(target_url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     content = ""
