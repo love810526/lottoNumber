@@ -45,55 +45,42 @@ def movie():
   soup = BeautifulSoup(res.text, 'html.parser')
   content = ""
   for index, data in enumerate(soup.select('div.movielist_info h2 a')):  
+        if index > 8:
+            break;
         title = data.text
         link =  data['href']
         content += '{}\n{}\n'.format(title, link)
   return content
 
 # 基金
-def fund1():
- head_Html_lotto='https://tw.money.yahoo.com/fund/history/F0HKG05X22:FO'
- res = requests.get(head_Html_lotto, timeout=30)
- soup = BeautifulSoup(res.text, 'html.parser')
- content = []
- content1 = []
- finalResult = ""
- for index, data in enumerate(soup.select('div#recent-price')): 
-   for index, date in  enumerate(data.select('td.short-date')) :
+def fund1(name):
+  head_Html_lotto=""
+  name = name
+  if (name=="安聯台灣科技"):
+    head_Html_lotto='https://tw.money.yahoo.com/fund/history/F0HKG05X22:FO'
+  elif (name=="貝萊德世界科技"):
+   head_Html_lotto='https://tw.money.yahoo.com/fund/history/F0GBR04AMX:FO' 
+  res = requests.get(head_Html_lotto, timeout=30)
+  soup = BeautifulSoup(res.text, 'html.parser')
+  content = []
+  content1 = []
+  finalResult = ""
+  for index, data in enumerate(soup.select('div#recent-price')): 
+    for index, date in  enumerate(data.select('td.short-date')) :
      date = date.text
      content.append(date)
      for index, value in  enumerate(data.select('td.zero')) :
       value = value.text
       content1.append(value)
- hash = {k:v for k, v in zip(content, content1)}
+  hash = {k:v for k, v in zip(content, content1)}
 
- for key, value in hash.items():
-    finalResult += "日期: {}, 淨值:{}\n".format(key,value)
- return finalResult
-
-def fund2():
- head_Html_lotto='https://tw.money.yahoo.com/fund/history/F0GBR04AMX:FO'
- res = requests.get(head_Html_lotto, timeout=30)
- soup = BeautifulSoup(res.text, 'html.parser')
- content = []
- content1 = []
- finalResult = ""
- for index, data in enumerate(soup.select('div#recent-price')): 
-   for index, date in  enumerate(data.select('td.short-date')) :
-     date = date.text
-     content.append(date)
-     for index, value in  enumerate(data.select('td.zero')) :
-      value = value.text
-      content1.append(value)
- hash = {k:v for k, v in zip(content, content1)}
-
- for key, value in hash.items():
-    finalResult += "日期: {}, 淨值:{}\n".format(key,value)
- return finalResult
+  for key, value in hash.items():
+     finalResult += "日期: {}, 淨值:{}\n".format(key,value)
+  return finalResult
 
 def New_Taipei_City():
     target_url = 'https://www.cwb.gov.tw/V7/forecast/taiwan/New_Taipei_City.htm'
-    driver = webdriver.PhantomJS(executable_path=executable_path)
+    driver = webdriver.PhantomJS(executable_path='vendor/phantomjs/bin/phantomjs')
     driver.get(target_url)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     content = ""
@@ -117,10 +104,10 @@ def handle_message(event):
         a=movie()
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="安聯台灣科技"):
-        a=fund1()
+        a=fund1(text)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="貝萊德世界科技"):
-        a=fund2()
+        a=fund1(text)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="明天天氣"):
         a=New_Taipei_City()
