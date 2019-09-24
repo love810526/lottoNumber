@@ -73,7 +73,7 @@ def search(searchValue):
   # 以 CSS 的選擇器來抓取 Google 的搜尋結果
     for index, items in enumerate(soup.select('h3.title a.ac-algo')):  
     # 標題
-      title = items.text
+      title = '{}. {}\n'.format(index,items.text)
 #     print("標題：" + items.text)
     # 網址
       link = items.get('href')

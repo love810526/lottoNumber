@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-from selenium import webdriver
-from selenium.webdriver.support.select import Select
-from bs4 import BeautifulSoup
-
-driver = webdriver.Chrome()
-driver.get("https://afrc.mnd.gov.tw/afrcweb/Trainning.aspx") 
-Select(driver.find_element_by_tag_name("select")).select_by_index(8)
-source = driver.page_source
-soup = BeautifulSoup(source, 'html.parser')
-print(soup)
-for index, data in enumerate(soup.select('td')):  
-        print(data.text)
-=======
 import requests
 from bs4 import BeautifulSoup
 
@@ -35,7 +21,7 @@ def search():
   # 以 CSS 的選擇器來抓取 Google 的搜尋結果
     for index, items in enumerate(soup.select('h3.title a.ac-algo')):  
     # 標題
-      title = items.text
+      title = '{}. {}\n'.format(index,items.text)
 #     print("標題：" + items.text)
     # 網址
       link = items.get('href')
@@ -45,4 +31,3 @@ def search():
 
 print(search())
     
->>>>>>> add search
