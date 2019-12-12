@@ -162,7 +162,7 @@ def handle_message(event):
         a=New_Taipei_City()
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="妹子仙女" or text=="金價"):
-        a=New_Taipei_City()
+        a=Gold()
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="你好"):
         reply_text = "哈囉"
