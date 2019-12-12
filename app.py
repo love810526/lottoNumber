@@ -81,6 +81,26 @@ def search(searchValue):
       content += '{}\n{}\n'.format(title, link)
   return content
 
+#黃金
+def Gold():
+    head_Html_gold='https://rate.bot.com.tw/gold?Lang=zh-TW'
+    res = requests.get(head_Html_gold, timeout=30)
+    soup = BeautifulSoup(res.text, 'html.parser')
+    content = ""
+    date = ""
+    sell = ""
+    sold = ""
+    for index, data in enumerate(soup.select('div.cf div')):
+        date = data.text  
+
+    for index, detail in enumerate(soup.select('div.hasscript-div td.text-right')):
+        if index < 1:
+            sell = detail.text
+        if index < 2:
+            sold = detail.text
+    content += "{}\n 本行買進:{}\n 本行賣出:{}\n".format(date, sell, sold)
+    return content
+
 # 基金
 def fund1(name):
   head_Html_lotto=""
@@ -139,6 +159,9 @@ def handle_message(event):
         a=fund1(text)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="明天天氣"):
+        a=New_Taipei_City()
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
+    elif(text=="妹子仙女" or text=="金價"):
         a=New_Taipei_City()
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="你好"):
