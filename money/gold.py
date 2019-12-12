@@ -16,5 +16,5 @@ for index, detail in enumerate(soup.select('div.hasscript-div td.text-right')):
         sell = detail.text
     if index < 2:
         sold = detail.text
-content += "{}\n 本行買進:{}\n 本行賣出:{}\n".format(date, sell, sold)
+content += "{}\n 本行賣出:{}\n 本行買進:{}\n".format(date, sell, sold)
 print(content)
