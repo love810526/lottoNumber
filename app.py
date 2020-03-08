@@ -140,6 +140,16 @@ def New_Taipei_City():
         result = '新北市天氣: {}'.format(content)
 
     return result
+
+#關鍵字
+def helper():
+    word1="最新電影"
+    word2="明天天氣"
+    word3="妹子仙女"
+    word4="金價"
+    content = ""
+    content += '{}\n{}\n{}\n{}\n'.format(word1, word2,word3,word4)
+    return content
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -164,6 +174,9 @@ def handle_message(event):
     elif(text=="妹子仙女" or text=="金價"):
         a=Gold()
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
+    elif(text=="小幫手"):
+        a=helper()
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))       
     elif(text=="你好"):
         reply_text = "哈囉"
     elif(text=="機器人"):
