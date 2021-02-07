@@ -159,6 +159,15 @@ def helper():
     content = ""
     content += '{}\n{}\n{}\n{}\n'.format(word1, word2,word3,word4)
     return content
+#關鍵字
+def foudhelper():
+    word1="安聯台灣科技"
+    word2="貝萊德世界科技"
+    word3="統一全球"
+    word4="野村優質"
+    content = ""
+    content += '{}\n{}\n{}\n{}\n'.format(word1, word2,word3,word4)
+    return content
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -177,6 +186,12 @@ def handle_message(event):
     elif(text=="貝萊德世界科技"):
         a=fund1(text)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
+    elif(text=="統一全球"):
+        a=fund1(text)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
+    elif(text=="野村優質"):
+        a=fund1(text)
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="明天天氣"):
         a=New_Taipei_City()
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
@@ -185,7 +200,10 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="小幫手"):
         a=helper()
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))            
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))   
+    elif(text=="基金小幫手"):
+        a=foudhelper()
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))           
     else:
         a=search(text)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
