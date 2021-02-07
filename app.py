@@ -106,29 +106,20 @@ def fund1(name):
   head_Html_lotto=""
   name = name
   if (name=="安聯台灣科技"):
-    head_Html_lotto='https://wms.firstbank.com.tw/w/wr/wr02.djhtm?a=ACDD04-47AD'
+    head_Html_lotto='https://tw.money.yahoo.com/fund/history/F0HKG05X22:FO'
   elif (name=="貝萊德世界科技"):
-   head_Html_lotto='https://wms.firstbank.com.tw/w/wb/wb02.djhtm?a=SHZ71-LA37'
-  elif (name=="統一全球"):
-   head_Html_lotto='https://wms.firstbank.com.tw/w/wr/wr02.djhtm?a=ACPS38-56BF'
-  elif (name=="野村優質"):
-   head_Html_lotto='https://wms.firstbank.com.tw/w/wr/wr02.djhtm?a=ACIC01-52BA'
+   head_Html_lotto='https://ilp.nanshanlife.com.tw/w/wb/wb02.djhtm?a=SHZ71-ML3' 
   res = requests.get(head_Html_lotto, timeout=30)
   soup = BeautifulSoup(res.text, 'html.parser')
   content = []
   content1 = []
   finalResult = ""
-
   for index, date in enumerate(soup.find('tbody').select('td.text-center')) :
     date = date.text
     content.append(date)
   for index, value in  enumerate(soup.find('tbody').select('td.text-right') ) :
-    if (name=="貝萊德世界科技"):
-      if (index % 2 ==0):
-          value1 = value.text.strip()
-    elif (name!="貝萊德世界科技"):
-      if (index % 3 ==0):
-          value1 = value.text.strip()
+    if (index % 3 ==0):
+        value1 = value.text.strip()
     content1.append(value1)
   hash = {k:v for k, v in zip(content, content1)}
 
