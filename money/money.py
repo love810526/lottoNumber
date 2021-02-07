@@ -51,4 +51,4 @@ def test(name):
   #    finalResult += "日期: {}, 淨值:{}\n".format(key,value)
   # return finalResult
 
-print(test("統一全球"))
+print(test("野村優質"))

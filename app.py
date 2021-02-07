@@ -111,8 +111,6 @@ def fund1(name):
    head_Html_lotto='https://wms.firstbank.com.tw/w/wb/wb02.djhtm?a=SHZ71-LA37'
   elif (name=="統一全球"):
    head_Html_lotto='https://wms.firstbank.com.tw/w/wr/wr02.djhtm?a=ACPS38-56BF'
-  elif (name=="野村優質"):
-   head_Html_lotto='https://wms.firstbank.com.tw/w/wr/wr02.djhtm?a=ACIC01-52BA'
   res = requests.get(head_Html_lotto, timeout=30)
   soup = BeautifulSoup(res.text, 'html.parser')
   content = []
@@ -164,7 +162,6 @@ def foudhelper():
     word1="安聯台灣科技"
     word2="貝萊德世界科技"
     word3="統一全球"
-    word4="野村優質"
     content = ""
     content += '{}\n{}\n{}\n{}\n'.format(word1, word2,word3,word4)
     return content
@@ -187,9 +184,6 @@ def handle_message(event):
         a=fund1(text)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="統一全球"):
-        a=fund1(text)
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
-    elif(text=="野村優質"):
         a=fund1(text)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=a))
     elif(text=="明天天氣"):
