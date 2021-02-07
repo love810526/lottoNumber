@@ -17,13 +17,13 @@ from selenium import webdriver
 from phantomjs_bin import executable_path
 
 app = Flask(__name__)
-
-# Channel Access Token
-line_bot_api = LineBotApi('zTVKvRch+94AFPWaOrhNug9Ufmu+O4zmbqc7BbP9+saNd8rTtgWCtLuS0WW9mkSKE4zT/XosFLqegvHomyLBGrN7qQkcUWk6JY60yjr4MaBU5UaQdY56ip568NJg5s8KhCa1vGdScO7lD0gWLvPAJwdB04t89/1O/w1cDnyilFU=N')
+8rTtgWCtLuS0WW9mkSKE4zT/XosFLqegvHomyLBGrN7qQkcUWk6JY60yjr4MaBU5UaQdY56ip568NJg5s8KhCa1vGdScO7lD0gWLvPAJwdB04t89/1O/w1cDnyilFU=N')
 # Channel Secret
 handler = WebhookHandler('b0041348478140a004fb1b8cebc05ea9')
 
 # 監聽所有來自 /callback 的 Post Request
+# Channel Access Token
+line_bot_api = LineBotApi('zTVKvRch+94AFPWaOrhNug9Ufmu+O4zmbqc7BbP9+saNd
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -106,21 +106,30 @@ def fund1(name):
   head_Html_lotto=""
   name = name
   if (name=="安聯台灣科技"):
-    head_Html_lotto='https://tw.money.yahoo.com/fund/history/F0HKG05X22:FO'
+    head_Html_lotto='https://wms.firstbank.com.tw/w/wr/wr02.djhtm?a=ACDD04-47AD'
   elif (name=="貝萊德世界科技"):
-   head_Html_lotto='https://tw.money.yahoo.com/fund/history/F0GBR04AMX:FO' 
+   head_Html_lotto='https://wms.firstbank.com.tw/w/wb/wb02.djhtm?a=SHZ71-LA37'
+  elif (name=="統一全球"):
+   head_Html_lotto='https://wms.firstbank.com.tw/w/wr/wr02.djhtm?a=ACPS38-56BF'
+  elif (name=="野村優質"):
+   head_Html_lotto='https://wms.firstbank.com.tw/w/wr/wr02.djhtm?a=ACIC01-52BA'
   res = requests.get(head_Html_lotto, timeout=30)
   soup = BeautifulSoup(res.text, 'html.parser')
   content = []
   content1 = []
   finalResult = ""
-  for index, data in enumerate(soup.select('div#recent-price')): 
-    for index, date in  enumerate(data.select('td.short-date')) :
-     date = date.text
-     content.append(date)
-     for index, value in  enumerate(data.select('td.zero')) :
-      value = value.text
-      content1.append(value)
+
+  for index, date in enumerate(soup.find('tbody').select('td.text-center')) :
+    date = date.text
+    content.append(date)
+  for index, value in  enumerate(soup.find('tbody').select('td.text-right') ) :
+    if (name=="貝萊德世界科技"):
+      if (index % 2 ==0):
+          value1 = value.text.strip()
+    elif (name!="貝萊德世界科技"):
+      if (index % 3 ==0):
+          value1 = value.text.strip()
+    content1.append(value1)
   hash = {k:v for k, v in zip(content, content1)}
 
   for key, value in hash.items():
