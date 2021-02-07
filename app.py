@@ -91,14 +91,14 @@ def Gold():
     sell = ""
     sold = ""
     for index, data in enumerate(soup.select('div.cf div')):
-        date = data.text  
+        date = data.text.strip()  
 
     for index, detail in enumerate(soup.select('div.hasscript-div td.text-right')):
         if index < 1:
-            sell = detail.text
+            sell = detail.text.strip()
         if index < 2:
-            sold = detail.text
-    content += "{}\n 本行賣出:{}\n 本行買進:{}\n".format(date, sell, sold)
+            sold = detail.text.strip()
+    content += "{}本行賣出:{}本行買進:{}\n".format(date, sell, sold)
     return content
 
 # 基金
