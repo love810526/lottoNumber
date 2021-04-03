@@ -163,7 +163,7 @@ def foudhelper():
     word2="貝萊德世界科技"
     word3="統一全球"
     content = ""
-    content += '{}\n{}\n{}\n{}\n'.format(word1, word2,word3,word4)
+    content += '{}\n{}\n{}\n{}\n'.format(word1,word2,word3)
     return content
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
